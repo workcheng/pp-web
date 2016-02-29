@@ -5,16 +5,19 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
 import com.spg.apidoc.po.UserInfo;
 import com.spg.apidoc.service.UserService;
 import com.spg.apidoc.vo.BaseResultVo;
+import com.spg.apidoc.vo.User;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 
@@ -36,6 +39,7 @@ public class UserCtroller extends BaseController
     private static final Log LOGGER = LogFactory.getLog(UserCtroller.class);
 
     @Resource
+    @Autowired
     UserService userService;
 
     @ResponseBody
@@ -73,4 +77,18 @@ public class UserCtroller extends BaseController
     public String test(){
     	return "success";
     }
+    
+   
+    @RequestMapping(value="index", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+    @ApiOperation(value = "数据插入")
+    public ModelAndView index(){
+    	User user=new User();
+    	userService.insertUser(user);
+        ModelAndView mav=new ModelAndView();
+        mav.setViewName("index");
+        mav.addObject("user",user);
+        return mav;
+    }
+     
+    
 }

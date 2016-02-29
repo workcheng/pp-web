@@ -1,6 +1,7 @@
 package com.spg.apidoc.service;
 
 import com.spg.apidoc.po.UserInfo;
+import com.spg.apidoc.vo.User;
 
 /**
  * 项目名称：apidoc
@@ -21,4 +22,5 @@ public interface UserService
     int updateUser(int id, UserInfo user);
     
     UserInfo queryUserById(int id);
+    int insertUser(User user);
 }

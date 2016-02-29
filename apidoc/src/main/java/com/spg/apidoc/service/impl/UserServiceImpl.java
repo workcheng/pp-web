@@ -5,10 +5,14 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.spg.apidoc.dao.UserDAO;
 import com.spg.apidoc.po.UserInfo;
 import com.spg.apidoc.service.UserService;
+import com.spg.apidoc.vo.User;
 
 /**
  * 项目名称：apidoc
@@ -74,5 +78,14 @@ public class UserServiceImpl implements UserService
         UserInfo user = allUsers.get(id);
         LOGGER.debug(String.format("exit function, %s", user));
         return user;
+    }
+    
+    @Autowired
+    @Qualifier("userDAO")
+    private UserDAO userDAO;
+     
+    public int insertUser(User user) {
+        // TODO Auto-generated method stub
+        return userDAO.insertUser(user);
     }
 }
