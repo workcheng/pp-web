@@ -1,5 +1,8 @@
 package com.spg.apidoc.controller;
 
+import java.util.Random;
+import java.util.UUID;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -64,8 +67,11 @@ public class UserCtroller extends BaseController
     @RequestMapping(
             value = "queryUserById", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ApiOperation(value = "根据用户ID查询用户信息")
-    public String queryUserById(@ApiParam(required = true, name = "userId", value = "user id") @RequestParam(
-            value = "userId") String userId, HttpServletRequest request)
+    public String queryUserById(
+    		@ApiParam(required = true, name = "userId", value = "user id") 
+            @RequestParam(value = "userId") 
+    		String userId, 
+    		HttpServletRequest request)
     {
         UserInfo info = userService.queryUserById(Integer.parseInt(userId));
 
@@ -81,8 +87,17 @@ public class UserCtroller extends BaseController
    
     @RequestMapping(value="index", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     @ApiOperation(value = "数据插入")
-    public ModelAndView index(){
+    public ModelAndView index(
+    @ApiParam(required = true, name = "name", value = "user name") 
+    @RequestParam(value = "name") 
+	String name,
+	@ApiParam(required = true, name = "password", value = "password") 
+    @RequestParam(value = "password") 
+	String password){
     	User user=new User();
+    	user.setId(new Random().nextInt());
+    	user.setName(name);
+    	user.setPassword(password);
     	userService.insertUser(user);
         ModelAndView mav=new ModelAndView();
         mav.setViewName("index");
